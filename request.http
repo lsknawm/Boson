@@ -1,24 +1,127 @@
-### 1. 健康检查
-GET http://localhost:8080/ping
+### 全局变量配置 (方便切换环境)
+@baseUrl = http://localhost:8080/api
+@contentType = application/json
+
+# ==========================================
+# 1. 基础信息接口测试 (GET)
+# ==========================================
+
+### 1.1 获取学科和章节列表
+# 场景：前端页面初始化，获取级联选择器数据
+# 预期：200 OK，返回包含 name 和 chapters 的数组
+GET {{baseUrl}}/info
 Accept: application/json
 
-###
+# ==========================================
+# 2. 生成试题接口 - 正常场景 (Happy Path)
+# ==========================================
 
-### 2. 生成试题 - 模糊匹配测试
-# 目标：获取 "Mathematics" 学科
-# 难度：A 到 C
-# 章节关键词：
-#   - "Calc" -> 可以匹配 "Calculus I", "Vector Calculus" 等
-#   - "Alg"  -> 可以匹配 "Linear Algebra", "Algebra" 等
-POST http://localhost:8080/api/generate-quiz
-Content-Type: application/json
+### 2.1 最简请求 (只传必填项 Subject)
+# 场景：用户只选了学科，其他全部默认
+# 预期：200 OK，返回该学科下随机 10 道题（默认 limit=10）
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
 
 {
-  "subject": "ComputerOrganization",
+  "subject": "ComputerNetworks"
+}
+
+### 2.2 完整请求 (包含所有筛选条件)
+# 场景：用户进行了详细的自定义配置
+# 预期：200 OK，返回 Mathematics 学科，章节涉及"高等数学"或"线性代数"，难度 A-C，最多 5 题
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "ComputerNetworks",
+  "chapters": ["网络", "计算机"],
   "difficulty_start": "A",
   "difficulty_end": "E",
-  "limit": 5,
-  "chapters": [
-    "数据"
-  ]
+  "limit": 10
+}
+
+### 2.3 章节模糊匹配测试
+# 场景：用户搜索关键词 "微积分"
+# 预期：200 OK，应匹配到 "高等数学-微积分上"、"微积分下" 等章节
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "Mathematics",
+  "chapters": ["微积分"]
+}
+
+# ==========================================
+# 3. 生成试题接口 - 边界与特殊逻辑测试
+# ==========================================
+
+### 3.1 难度区间倒序自动修正测试
+# 场景：前端传错参数，Start > End (C > A)
+# 预期：200 OK，后端自动交换为 A-C，正常返回数据
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "Mathematics",
+  "difficulty_start": "C",
+  "difficulty_end": "A",
+  "limit": 5
+}
+
+### 3.2 Limit 参数边界测试 (0 或 负数)
+# 场景：参数未传递或传递非法数值
+# 预期：200 OK，后端默认重置为 10
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "Mathematics",
+  "limit": 0
+}
+
+### 3.3 特殊字符正则转义测试
+# 场景：学科或章节名包含正则特殊字符 (+, ?, *)
+# 预期：200 OK，后端使用 QuoteMeta 正确转义，不会报错
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "Programming",
+  "chapters": ["C++", "C#", "Node.js?"]
+}
+
+### 3.4 查询不存在的学科 (空结果)
+# 场景：查询数据库中没有的数据
+# 预期：200 OK，返回 data: [] (空数组)，而不是 null 或报错
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "AlienTechnologyCCC"
+}
+
+# ==========================================
+# 4. 生成试题接口 - 异常错误测试 (Error Cases)
+# ==========================================
+
+### 4.1 缺少必填参数 Subject
+# 场景：前端漏传必填字段
+# 预期：400 Bad Request，返回 msg: "参数错误: ..."
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "chapters": ["高等数学"],
+  "limit": 10
+}
+
+### 4.2 参数类型错误 (Limit 传字符串)
+# 场景：前端 JSON 格式错误
+# 预期：400 Bad Request，JSON 反序列化失败
+POST {{baseUrl}}/generate-quiz
+Content-Type: {{contentType}}
+
+{
+  "subject": "Mathematics",
+  "limit": "ten"
 }

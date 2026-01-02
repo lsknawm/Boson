@@ -5,11 +5,11 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"regexp" // 用于转义正则特殊字符
+	"regexp"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive" // 用于构建 MongoDB 正则对象
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -22,7 +22,7 @@ const (
 	CollName = "data"
 )
 
-// InitDB 初始化数据库连接
+// InitDB 初始化数据库
 func InitDB() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
@@ -42,63 +42,86 @@ func InitDB() {
 	fmt.Println("MongoDB 连接成功！")
 }
 
-// GetQuestions 根据筛选条件从数据库随机获取题目
+// GetQuizOptions 获取所有学科及对应的章节信息 (聚合查询)
+func GetQuizOptions() ([]model.SubjectInfo, error) {
+	collection := client.Database(DBName).Collection(CollName)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	// 聚合管道：
+	// 1. $group: 按 subject 分组 (_id = "$subject")
+	// 2. $addToSet: 将 meta.chapter 加入 chapters 数组 (自动去重)
+	// 3. $sort: 按学科名排序
+	pipeline := mongo.Pipeline{
+		{{Key: "$group", Value: bson.D{
+			{Key: "_id", Value: "$subject"},
+			{Key: "chapters", Value: bson.D{{Key: "$addToSet", Value: "$meta.chapter"}}},
+		}}},
+		{{Key: "$sort", Value: bson.D{{Key: "_id", Value: 1}}}},
+	}
+
+	cursor, err := collection.Aggregate(ctx, pipeline)
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(ctx)
+
+	var results []model.SubjectInfo
+	if err = cursor.All(ctx, &results); err != nil {
+		return nil, err
+	}
+
+	return results, nil
+}
+
+// GetQuestions 根据筛选条件获取题目
 func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 	collection := client.Database(DBName).Collection(CollName)
 
-	// 1. 构建基础筛选条件 (Subject 是必须的)
 	filter := bson.M{"subject": req.Subject}
 
-	// 2. 难度范围筛选 (支持 A-C 这种区间)
+	// 难度筛选
 	if req.DifficultyStart != "" || req.DifficultyEnd != "" {
 		start := req.DifficultyStart
 		end := req.DifficultyEnd
-
-		// 默认值处理
 		if start == "" {
 			start = end
 		}
 		if end == "" {
 			end = start
 		}
-
-		// 容错：保证 start <= end
 		if start > end {
 			start, end = end, start
 		}
-
-		filter["meta.difficulty"] = bson.M{
-			"$gte": start,
-			"$lte": end,
-		}
+		filter["meta.difficulty"] = bson.M{"$gte": start, "$lte": end}
 	}
 
-	// 3. 章节筛选 (改为模糊匹配)
-	// 逻辑：只要题目章节名称中包含 request 中的任意一个关键词，即视为匹配
+	// 章节筛选 (正则匹配)
 	if len(req.Chapters) > 0 {
 		var orConditions []bson.M
 		for _, kw := range req.Chapters {
-			// QuoteMeta 确保关键词中的特殊符号（如 +, ?, *）被当作普通字符处理
-			// Options: "i" 表示不区分大小写 (Case Insensitive)
+			if kw == "" {
+				continue
+			}
 			safePattern := regexp.QuoteMeta(kw)
 			orConditions = append(orConditions, bson.M{
 				"meta.chapter": primitive.Regex{Pattern: safePattern, Options: "i"},
 			})
 		}
-		// 使用 $or 组合所有关键词条件
-		filter["$or"] = orConditions
+		if len(orConditions) > 0 {
+			filter["$or"] = orConditions
+		}
 	}
 
-	// 4. 题目数量限制
 	limit := req.Limit
 	if limit <= 0 {
 		limit = 10
 	}
 
-	// 5. 聚合管道：匹配 -> 随机抽样
 	pipeline := []bson.M{
-		{"$match": filter},                 // 筛选
-		{"$sample": bson.M{"size": limit}}, // 随机乱序并截取
+		{"$match": filter},
+		{"$sample": bson.M{"size": limit}},
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -115,6 +138,7 @@ func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 		return nil, err
 	}
 
+	// 防止返回 nil (虽然 gin 会处理为 null，但空数组对前端更友好)
 	if questions == nil {
 		questions = []model.Question{}
 	}

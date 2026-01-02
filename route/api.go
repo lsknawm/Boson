@@ -8,11 +8,29 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GenerateQuizHandler 处理生成试题的请求
+// GetInfoHandler 获取学科和章节列表
+func GetInfoHandler(c *gin.Context) {
+	data, err := tools.GetQuizOptions()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, model.Response{
+			Code: 500,
+			Msg:  "获取基础信息失败: " + err.Error(),
+			Data: nil,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, model.Response{
+		Code: 200,
+		Msg:  "success",
+		Data: data,
+	})
+}
+
+// GenerateQuizHandler 生成试题
 func GenerateQuizHandler(c *gin.Context) {
 	var req model.GenerateQuizRequest
 
-	// 1. 绑定并校验 JSON 参数
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, model.Response{
 			Code: 400,
@@ -22,18 +40,16 @@ func GenerateQuizHandler(c *gin.Context) {
 		return
 	}
 
-	// 2. 从数据库获取题目
 	questions, err := tools.GetQuestions(req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, model.Response{
 			Code: 500,
-			Msg:  "服务器内部错误: " + err.Error(),
+			Msg:  "获取题目失败: " + err.Error(),
 			Data: nil,
 		})
 		return
 	}
 
-	// 3. 返回成功响应
 	c.JSON(http.StatusOK, model.Response{
 		Code: 200,
 		Msg:  "success",
@@ -41,18 +57,17 @@ func GenerateQuizHandler(c *gin.Context) {
 	})
 }
 
-// RegisterRoutes 注册所有路由
+// RegisterRoutes 注册路由
 func RegisterRoutes(r *gin.Engine) {
-	// 简单的健康检查
 	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
+		c.JSON(200, gin.H{"message": "pong"})
 	})
 
 	api := r.Group("/api")
 	{
-		// 首页 -> 刷题页：提交配置，获取题目列表
+		// 获取学科与章节信息 (前端初始化调用)
+		api.GET("/info", GetInfoHandler)
+		// 生成试题 (点击开始刷题调用)
 		api.POST("/generate-quiz", GenerateQuizHandler)
 	}
 }
