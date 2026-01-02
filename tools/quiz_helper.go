@@ -5,9 +5,11 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"regexp" // 用于转义正则特殊字符
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive" // 用于构建 MongoDB 正则对象
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -44,16 +46,15 @@ func InitDB() {
 func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 	collection := client.Database(DBName).Collection(CollName)
 
-	// 1. 构建筛选条件 (Match)
+	// 1. 构建基础筛选条件 (Subject 是必须的)
 	filter := bson.M{"subject": req.Subject}
 
-	// 难度范围处理
-	// 逻辑：如果是 "A" 到 "C"，则包含 A, B, C。
+	// 2. 难度范围筛选 (支持 A-C 这种区间)
 	if req.DifficultyStart != "" || req.DifficultyEnd != "" {
 		start := req.DifficultyStart
 		end := req.DifficultyEnd
 
-		// 如果只传了一个值，默认 Start=End (相当于单选)
+		// 默认值处理
 		if start == "" {
 			start = end
 		}
@@ -61,7 +62,7 @@ func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 			end = start
 		}
 
-		// 容错处理：如果 Start > End (例如 Start="C", End="A")，交换它们以确保查询有效
+		// 容错：保证 start <= end
 		if start > end {
 			start, end = end, start
 		}
@@ -72,21 +73,32 @@ func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 		}
 	}
 
-	// 章节筛选
+	// 3. 章节筛选 (改为模糊匹配)
+	// 逻辑：只要题目章节名称中包含 request 中的任意一个关键词，即视为匹配
 	if len(req.Chapters) > 0 {
-		filter["meta.chapter"] = bson.M{"$in": req.Chapters}
+		var orConditions []bson.M
+		for _, kw := range req.Chapters {
+			// QuoteMeta 确保关键词中的特殊符号（如 +, ?, *）被当作普通字符处理
+			// Options: "i" 表示不区分大小写 (Case Insensitive)
+			safePattern := regexp.QuoteMeta(kw)
+			orConditions = append(orConditions, bson.M{
+				"meta.chapter": primitive.Regex{Pattern: safePattern, Options: "i"},
+			})
+		}
+		// 使用 $or 组合所有关键词条件
+		filter["$or"] = orConditions
 	}
 
-	// 2. 设置题目数量限制
+	// 4. 题目数量限制
 	limit := req.Limit
 	if limit <= 0 {
 		limit = 10
 	}
 
-	// 3. 聚合管道：匹配 -> 随机抽样
+	// 5. 聚合管道：匹配 -> 随机抽样
 	pipeline := []bson.M{
-		{"$match": filter},
-		{"$sample": bson.M{"size": limit}},
+		{"$match": filter},                 // 筛选
+		{"$sample": bson.M{"size": limit}}, // 随机乱序并截取
 	}
 
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
