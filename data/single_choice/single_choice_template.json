@@ -1,72 +1,35 @@
 {
   "content": {
     "code": null,
-    "has_image": false,
-    "image": null,
-    "text": "在 DNS（域名系统）解析中，用于将**主机名**映射到 **IPv4 地址**的记录类型是：",
     "code_error": false,
     "code_run_count": 0,
-    "debug_msg": null
+    "debug_msg": null,
+    "has_image": false,
+    "image": null,
+    "text": "深度清洗测试"
   },
-  "id": "NET-NEW-16",
-  "meta": {
-    "chapter": "计算机网络-DNS",
-    "difficulty": "B",
-    "score": 4
-  },
+  "id": "TEST-009-DEEP-CLEAN",
   "structure": {
-    "layout": "vertical",
-    "options": [
-      {
-        "id": "A",
-        "text": "A 记录",
-        "code": null,
-        "code_error": false,
-        "code_run_count": 0,
-        "has_image": false,
-        "image": null
-      },
-      {
-        "id": "B",
-        "text": "CNAME 记录",
-        "code": null,
-        "code_error": false,
-        "code_run_count": 0,
-        "has_image": false,
-        "image": null
-      },
-      {
-        "id": "C",
-        "text": "AAAA 记录",
-        "code": null,
-        "code_error": false,
-        "code_run_count": 0,
-        "has_image": false,
-        "image": null
-      },
-      {
-        "id": "D",
-        "text": "MX 记录",
-        "code": null,
-        "code_error": false,
-        "code_run_count": 0,
-        "has_image": false,
-        "image": null
-      }
-    ]
+    "options": [],
+    "layout": "vertical"
   },
-  "subject": "ComputerNetworks",
   "type": "single_choice",
-  "uuid": "69576ab3d6a67c404554560b",
+  "uuid": "69579b86635b73b0c0cf5166",
   "validation": {
     "answer": "A",
     "explanation": {
       "code": null,
-      "text": "A 记录用于映射 IPv4 地址；AAAA 记录用于映射 IPv6 地址；CNAME 用于别名指向；MX 用于邮件交换服务器。",
       "code_error": false,
       "code_run_count": 0,
       "has_image": false,
-      "image": null
+      "image": null,
+      "text": "这里有个空代码"
     }
+  },
+  "subject": "Uncategorized",
+  "meta": {
+    "chapter": "General",
+    "difficulty": "C",
+    "score": 5
   }
 }
