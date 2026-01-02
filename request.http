@@ -47,8 +47,8 @@ POST {{baseUrl}}/generate-quiz
 Content-Type: {{contentType}}
 
 {
-  "subject": "Mathematics",
-  "chapters": ["微积分"]
+  "subject": "ComputerNetworks",
+  "chapters": ["网络"]
 }
 
 # ==========================================
@@ -75,7 +75,7 @@ POST {{baseUrl}}/generate-quiz
 Content-Type: {{contentType}}
 
 {
-  "subject": "Mathematics",
+  "subject": "ComputerNetworks",
   "limit": 0
 }
 
@@ -86,8 +86,8 @@ POST {{baseUrl}}/generate-quiz
 Content-Type: {{contentType}}
 
 {
-  "subject": "Programming",
-  "chapters": ["C++", "C#", "Node.js?"]
+  "subject": "ComputerNetworks",
+  "chapters": ["网络", "计算机?"]
 }
 
 ### 3.4 查询不存在的学科 (空结果)

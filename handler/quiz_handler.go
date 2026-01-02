@@ -1,8 +1,8 @@
-package route
+package handler
 
 import (
 	"Boson/model"
-	"Boson/tools"
+	"Boson/service"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +10,7 @@ import (
 
 // GetInfoHandler 获取学科和章节列表
 func GetInfoHandler(c *gin.Context) {
-	data, err := tools.GetQuizOptions()
+	data, err := service.GetQuizOptions()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, model.Response{
 			Code: 500,
@@ -40,7 +40,7 @@ func GenerateQuizHandler(c *gin.Context) {
 		return
 	}
 
-	questions, err := tools.GetQuestions(req)
+	questions, err := service.GetQuestions(req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, model.Response{
 			Code: 500,
@@ -55,19 +55,4 @@ func GenerateQuizHandler(c *gin.Context) {
 		Msg:  "success",
 		Data: questions,
 	})
-}
-
-// RegisterRoutes 注册路由
-func RegisterRoutes(r *gin.Engine) {
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong"})
-	})
-
-	api := r.Group("/api")
-	{
-		// 获取学科与章节信息 (前端初始化调用)
-		api.GET("/info", GetInfoHandler)
-		// 生成试题 (点击开始刷题调用)
-		api.POST("/generate-quiz", GenerateQuizHandler)
-	}
 }

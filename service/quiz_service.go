@@ -1,58 +1,25 @@
-package tools
+package service
 
 import (
+	"Boson/database"
 	"Boson/model"
 	"context"
-	"fmt"
-	"log"
+	"go.mongodb.org/mongo-driver/mongo"
 	"regexp"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
-
-var client *mongo.Client
-
-const (
-	MongoURI = "mongodb://localhost:27017"
-	DBName   = "quanta_db"
-	CollName = "data"
-)
-
-// InitDB 初始化数据库
-func InitDB() {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	fmt.Println("正在连接 MongoDB...")
-	clientOpts := options.Client().ApplyURI(MongoURI)
-	var err error
-	client, err = mongo.Connect(ctx, clientOpts)
-	if err != nil {
-		log.Fatalf("连接配置错误: %v", err)
-	}
-
-	err = client.Ping(ctx, nil)
-	if err != nil {
-		log.Fatalf("无法连接到 MongoDB: %v", err)
-	}
-	fmt.Println("MongoDB 连接成功！")
-}
 
 // GetQuizOptions 获取所有学科及对应的章节信息 (聚合查询)
 func GetQuizOptions() ([]model.SubjectInfo, error) {
-	collection := client.Database(DBName).Collection(CollName)
+	collection := database.GetCollection()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// 聚合管道：
-	// 1. $group: 按 subject 分组 (_id = "$subject")
-	// 2. $addToSet: 将 meta.chapter 加入 chapters 数组 (自动去重)
-	// 3. $sort: 按学科名排序
+	// 聚合管道
 	pipeline := mongo.Pipeline{
 		{{Key: "$group", Value: bson.D{
 			{Key: "_id", Value: "$subject"},
@@ -77,7 +44,7 @@ func GetQuizOptions() ([]model.SubjectInfo, error) {
 
 // GetQuestions 根据筛选条件获取题目
 func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
-	collection := client.Database(DBName).Collection(CollName)
+	collection := database.GetCollection()
 
 	filter := bson.M{"subject": req.Subject}
 
@@ -138,7 +105,7 @@ func GetQuestions(req model.GenerateQuizRequest) ([]model.Question, error) {
 		return nil, err
 	}
 
-	// 防止返回 nil (虽然 gin 会处理为 null，但空数组对前端更友好)
+	// 防止返回 nil
 	if questions == nil {
 		questions = []model.Question{}
 	}
