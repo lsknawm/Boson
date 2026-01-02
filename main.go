@@ -3,6 +3,7 @@ package main
 import (
 	"Boson/database"
 	"Boson/router"
+	"fmt"
 )
 
 func main() {
@@ -13,5 +14,6 @@ func main() {
 	r := router.SetupRouter()
 
 	// 3. 启动服务
+	fmt.Println("Server is running on port 8080")
 	r.Run(":8080")
 }
