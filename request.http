@@ -1,5 +1,36 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=GoLand
+### 1. 健康检查
+GET http://localhost:8080/ping
+Accept: application/json
 
 ###
+
+### 2. 生成试题 (范围筛选)
+# 获取 5 道 "Mathematics" 题目
+# 难度范围: "A" 到 "C" (包含 A, B, C)
+POST http://localhost:8080/api/generate-quiz
+Content-Type: application/json
+
+{
+  "subject": "Mathematics",
+  "difficulty_start": "A",
+  "difficulty_end": "C",
+  "limit": 5,
+  "chapters": [
+    "高等数学",
+    "计组"
+  ]
+}
+
+###
+
+### 3. 生成试题 (单难度筛选)
+# 难度范围: "C" 到 "C" (只选 C)
+POST http://localhost:8080/api/generate-quiz
+Content-Type: application/json
+
+{
+  "subject": "Mathematics",
+  "difficulty_start": "C",
+  "difficulty_end": "C",
+  "limit": 5
+}
