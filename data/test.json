@@ -1,7 +1,346 @@
-{
-  "answer": "301是永久重定向，302是临时重定向。",
-  "explanation": {
-    "text": "1. **区别**：301 代表资源已被永久移动到新 URL，客户端后续请求应直接访问新 URL；302 代表资源临时移动，客户端后续仍应访问原 URL。\n2. **SEO影响**：搜索引擎遇到 301 会将旧网址的权重（PageRank）传递给新网址；而遇到 302 则不会转移权重，保留旧网址的索引。",
-    "code": null
+[
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "image": null,
+          "code_error": false,
+          "id": "A",
+          "text": "0",
+          "code": null,
+          "code_run_count": 0,
+          "has_image": false
+        },
+        {
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "code_error": false,
+          "id": "B",
+          "text": "2",
+          "code": null
+        },
+        {
+          "has_image": false,
+          "image": null,
+          "code_error": false,
+          "id": "C",
+          "text": "-2",
+          "code": null,
+          "code_run_count": 0
+        },
+        {
+          "image": null,
+          "code_error": false,
+          "id": "D",
+          "text": "3",
+          "code": null,
+          "code_run_count": 0,
+          "has_image": false
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "A",
+          "text": "D E B C A"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "A B D E C"
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "C",
+          "text": "D B E A C",
+          "code": null
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "D",
+          "text": "E D B C A",
+          "code": null
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "A",
+          "text": "1"
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "1/2",
+          "code": null
+        },
+        {
+          "id": "C",
+          "text": "1/3",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null
+        },
+        {
+          "id": "D",
+          "text": "2/3",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "A",
+          "text": "6",
+          "code": null,
+          "code_error": false
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "7",
+          "code": null
+        },
+        {
+          "has_image": false,
+          "image": null,
+          "id": "C",
+          "text": "9",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "D",
+          "text": "12",
+          "code": null
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "image": null,
+          "id": "A",
+          "text": "7",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false
+        },
+        {
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "10",
+          "code": null,
+          "code_error": false
+        },
+        {
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "C",
+          "text": "13",
+          "code": null,
+          "code_error": false
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "D",
+          "text": "14",
+          "code": null
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "A",
+          "text": "A 记录",
+          "code": null
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "CNAME 记录"
+        },
+        {
+          "image": null,
+          "id": "C",
+          "text": "AAAA 记录",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false
+        },
+        {
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "D",
+          "text": "MX 记录",
+          "code": null
+        }
+      ]
+    }
+  },
+  {
+    "structure": {
+      "options": [
+        {
+          "id": "A",
+          "text": "0",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "B",
+          "text": "1"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "C",
+          "text": "无穷大 (Infinity)"
+        },
+        {
+          "id": "D",
+          "text": "不存在",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null
+        }
+      ],
+      "layout": "vertical"
+    }
+  },
+  {
+    "structure": {
+      "options": [
+        {
+          "id": "A",
+          "text": "Rotation Matrix (旋转矩阵)",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null
+        },
+        {
+          "image": null,
+          "id": "B",
+          "text": "Identity Matrix (单位矩阵)",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false
+        },
+        {
+          "has_image": false,
+          "image": null,
+          "id": "C",
+          "text": "Shear Matrix (剪切矩阵) [[1, 1], [0, 1]]",
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "image": null,
+          "id": "D",
+          "text": "Scaling Matrix (缩放矩阵) [[2, 0], [0, 2]]"
+        }
+      ],
+      "layout": "vertical"
+    }
   }
-}
+]

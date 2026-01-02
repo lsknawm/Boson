@@ -19,7 +19,7 @@ const (
 	MongoURI = "mongodb://localhost:27017"
 	DBName   = "quanta_db" // 目标数据库名
 	CollName = "data"      // 目标集合(表)名
-	JsonFile = "./script/questions.json"
+	JsonFile = "./data/questions.json"
 )
 
 func main() {

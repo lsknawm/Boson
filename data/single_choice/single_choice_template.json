@@ -1,0 +1,72 @@
+{
+  "content": {
+    "code": null,
+    "has_image": false,
+    "image": null,
+    "text": "在 DNS（域名系统）解析中，用于将**主机名**映射到 **IPv4 地址**的记录类型是：",
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null
+  },
+  "id": "NET-NEW-16",
+  "meta": {
+    "chapter": "计算机网络-DNS",
+    "difficulty": "B",
+    "score": 4
+  },
+  "structure": {
+    "layout": "vertical",
+    "options": [
+      {
+        "id": "A",
+        "text": "A 记录",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "B",
+        "text": "CNAME 记录",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "C",
+        "text": "AAAA 记录",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "D",
+        "text": "MX 记录",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      }
+    ]
+  },
+  "subject": "ComputerNetworks",
+  "type": "single_choice",
+  "uuid": "69576ab3d6a67c404554560b",
+  "validation": {
+    "answer": "A",
+    "explanation": {
+      "code": null,
+      "text": "A 记录用于映射 IPv4 地址；AAAA 记录用于映射 IPv6 地址；CNAME 用于别名指向；MX 用于邮件交换服务器。",
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "content": {
+    "code": null,
+    "has_image": false,
+    "image": null,
+    "text": "相较于 B-Tree，**B+ Tree** 常被选为数据库（如 MySQL InnoDB）索引结构的主要原因包括：",
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null
+  },
+  "id": "DB-NEW-26",
+  "meta": {
+    "chapter": "数据库-索引",
+    "difficulty": "C",
+    "score": 6
+  },
+  "structure": {
+    "layout": "vertical",
+    "options": [
+      {
+        "id": "A",
+        "text": "B+ 树的非叶子节点不存储数据，只存储键值，能容纳更多索引项，降低树高",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "B",
+        "text": "B+ 树的叶子节点通过指针连接成链表，便于范围查询（Range Scan）",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "C",
+        "text": "B+ 树的所有查询都要查找到叶子节点，查询性能更稳定",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      },
+      {
+        "id": "D",
+        "text": "B+ 树支持二分查找，而 B-Tree 不支持",
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image": null
+      }
+    ]
+  },
+  "subject": "Database",
+  "type": "multiple_choice",
+  "uuid": "69576ab3d6a67c4045545615",
+  "validation": {
+    "answer": [
+      "A",
+      "B",
+      "C"
+    ],
+    "explanation": {
+      "code": null,
+      "text": "A、B、C 均正确。D 错误，B-Tree 节点内部也是有序的，同样支持二分查找。B+ 树的核心优势在于磁盘 I/O 优化（树矮）和范围查询能力（叶子链表）。",
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null
+    }
+  }
+}
