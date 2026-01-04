@@ -1,0 +1,154 @@
+### ========================================================================
+### Boson Quiz System - 前后端接口文档
+### ========================================================================
+### 基础环境配置
+### @host: 后端服务地址
+### @contentType: 标准 JSON头
+### ========================================================================
+
+@hostname = localhost
+@port = 8080
+@baseUrl = http://{{hostname}}:{{port}}/api/v1
+@contentType = application/json
+
+### ========================================================================
+### 1. 系统基础接口
+### ========================================================================
+
+### 1.1 系统健康检查
+# 用于前端检测后端服务是否可用，通常在应用初始化时调用。
+# @response 200: { "message": "pong", "system": "Boson Quiz System" }
+GET http://{{hostname}}:{{port}}/ping
+
+### ========================================================================
+### 2. 元数据接口 (Metadata)
+### 用于前端渲染筛选菜单、下拉框等静态选项
+### ========================================================================
+
+### 2.1 获取所有科目列表
+# 返回系统中所有已存在的科目名称，用于“选题”或“筛选”下拉框。
+# @response 200: { "subjects": ["计算机科学", "English", ...] }
+GET {{baseUrl}}/meta/subjects
+
+### 2.2 获取所有标签列表
+# 返回系统中所有标签，可用于标签云或搜索推荐。
+# @response 200: { "tags": ["HTTP", "算法", "语法", ...] }
+GET {{baseUrl}}/meta/tags
+
+### ========================================================================
+### 3. 刷题与考试接口 (Client/User Side)
+### 面向普通用户的核心功能：生成试卷、答题、看解析
+### ========================================================================
+
+### 3.1 随机生成试卷 (开始考试)
+# @description: 根据指定条件随机抽取题目。
+# @note: 返回的题目列表中 **不包含** `validation` (答案) 字段，防止前端作弊。
+#
+# 请求参数说明:
+# - subject (必填): 科目名称
+# - count (选填): 题目数量，默认 5
+# - difficulty (选填): 难度过滤 (A, B, C, D)
+POST {{baseUrl}}/quiz/generate
+Content-Type: {{contentType}}
+
+{
+  "subject": "English",
+  "count": 5,
+  "difficulty": "B"
+}
+
+### 3.2 提交答案并判分 (单题交互)
+# @description: 用户每做完一题，调用此接口进行校验。
+# @return: 返回是否正确、标准答案以及解析。
+#
+# 请求参数说明:
+# - question_id (必填): 题目ID (支持 数据库UUID 或 自定义ID 如 Q_101)
+# - user_answer (必填): 用户选择的选项ID (如 "OPT_A") 或填空内容
+POST {{baseUrl}}/quiz/validate
+Content-Type: {{contentType}}
+
+{
+  "question_id": "Q_101",
+  "user_answer": "OPT_B"
+}
+
+### 3.3 获取单题解析
+# @description: 仅获取解析文本，通常用于“查看解析”按钮。
+GET {{baseUrl}}/quiz/Q_101/explanation
+
+### ========================================================================
+### 4. 题目管理接口 (CMS/Admin Side)
+### 面向后台管理系统：增删改查
+### ========================================================================
+
+### 4.1 获取题目列表 (分页与筛选)
+# @description: 表格展示题目数据。
+#
+# 查询参数 (Query Params):
+# - subject: 按科目筛选
+# - type: 按题型筛选 (single_choice, multiple_choice, true_false, etc.)
+# - difficulty: 按难度筛选
+# - page/size: (后端暂未实装分页逻辑，预留参数)
+GET {{baseUrl}}/questions?subject=English&type=single_choice
+
+### 4.2 获取题目详情
+# @description: 进入编辑页面时调用，返回完整数据（包含答案）。
+# @param id: 题目ID
+GET {{baseUrl}}/questions/Q_101
+
+### 4.3 创建新题目
+# @description: 录入新题。
+# @note: `id` 字段是自定义显示ID，`uuid` 无需传递，由后端自动生成。
+POST {{baseUrl}}/questions
+Content-Type: {{contentType}}
+
+{
+  "id": "NEW_Q_001",
+  "type": "single_choice",
+  "subject": "前端开发",
+  "meta": {
+    "chapter": ["Vue.js"],
+    "tags": ["框架", "组件"],
+    "difficulty": "B",
+    "score": 5
+  },
+  "content": {
+    "text": "Vue 3 中用于定义响应式数据的 API 是？",
+    "has_image": false
+  },
+  "structure": {
+    "layout": "vertical",
+    "options": [
+      { "id": "OPT_A", "text": "data()" },
+      { "id": "OPT_B", "text": "ref()" },
+      { "id": "OPT_C", "text": "useEffect()" },
+      { "id": "OPT_D", "text": "ngOninit()" }
+    ]
+  },
+  "validation": {
+    "answer": "OPT_B",
+    "explanation": {
+      "text": "ref 和 reactive 是 Vue 3 Composition API 的核心。"
+    }
+  }
+}
+
+### 4.4 更新题目
+# @description: 修改题目内容。注意：不包含的字段不会被置空，而是部分更新(Patch模式)或全量覆盖取决于后端实现。
+# 当前后端实现为 $set 模式（部分更新）。
+PUT {{baseUrl}}/questions/NEW_Q_001
+Content-Type: {{contentType}}
+
+{
+  "meta": {
+    "difficulty": "A",
+    "score": 2
+  },
+  "content": {
+    "text": "Vue 3 中用于定义基本类型响应式数据的 API 是？(已修正)"
+  }
+}
+
+### 4.5 删除题目
+# @description: 物理删除题目，不可恢复。
+DELETE {{baseUrl}}/questions/NEW_Q_001
