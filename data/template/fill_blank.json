@@ -1,0 +1,66 @@
+{
+  "content": {
+    "code": null,
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null,
+    "has_image": false,
+    "image": null,
+    "text": "在 CSS 中，id 选择器使用符号 __BLANK_1__ 开头，class 选择器使用符号 __BLANK_2__ 开头。"
+  },
+  "id": "Q_005",
+  "meta": {
+    "chapter": ["CSS基础"],
+    "tags": ["选择器"],
+    "difficulty": "B",
+    "score": 4
+  },
+  "structure": {
+    "blanks": [
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "BLANK_HASH",
+        "image": null,
+        "placeholder": "填写符号",
+        "text": null
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "BLANK_DOT",
+        "image": null,
+        "placeholder": "填写符号",
+        "text": null
+      }
+    ]
+  },
+  "subject": "前端开发",
+  "type": "fill_blank",
+  "uuid": "UUID_005",
+  "validation": {
+    "answer": {
+      "BLANK_HASH": [
+        "#",
+        "井号"
+      ],
+      "BLANK_DOT": [
+        ".",
+        "点",
+        "句号"
+      ]
+    },
+    "explanation": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null,
+      "text": "ID 选择器使用 #，类选择器使用 . "
+    }
+  }
+}

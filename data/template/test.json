@@ -1,0 +1,297 @@
+[
+  {
+    "content": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "debug_msg": null,
+      "has_image": true,
+      "image":  "图片数据",
+      "text": "文本"
+    },
+    "id": "ID",
+    "meta": {
+      "chapter": ["章节（可多个）"],
+      "tags": [""],
+      "difficulty": "C",
+      "score": 5
+    },
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        }
+      ]
+    },
+    "subject": "学科",
+    "type": "single_choice",
+    "uuid": "UUID",
+    "validation": {
+      "answer": "ID",
+      "explanation": {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image":  "图片数据",
+        "text": "文本"
+      }
+    }
+  },
+  {
+    "content": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "debug_msg": null,
+      "has_image": false,
+      "image":  "图片数据",
+      "text": "文本"
+    },
+    "id": "ID",
+    "meta": {
+      "chapter": ["章节（可多个）"],
+      "tags": [""],
+      "difficulty": "D",
+      "score": 6
+    },
+    "structure": {
+      "layout": "vertical",
+      "options": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        }
+      ]
+    },
+    "subject": "学科",
+    "type": "multiple_choice",
+    "uuid": "UUID",
+    "validation": {
+      "answer": [
+        "ID",
+        "ID",
+        "ID"
+      ],
+      "explanation": {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image":  "图片数据",
+        "text": "文本"
+      }
+    }
+  },
+  {
+    "content": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "debug_msg": null,
+      "has_image": false,
+      "image":  "图片数据",
+      "text": "文本"
+    },
+    "id": "ID",
+    "meta": {
+      "chapter": ["章节（可多个）"],
+      "tags": [""],
+      
+      "difficulty": "B",
+      "score": 2
+    },
+    "structure": {
+      "layout": "horizontal",
+      "options": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        },
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "text": "文本"
+        }
+      ]
+    },
+    "subject": "学科",
+    "type": "true_false",
+    "uuid": "UUID",
+    "validation": {
+      "answer": "ID",
+      "explanation": {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image":  "图片数据",
+        "text": "文本"
+      }
+    }
+  },
+  {
+    "content": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "debug_msg": null,
+      "has_image": false,
+      "image":  "图片数据",
+      "text": "文本"
+    },
+    "id": "ID",
+    "meta": {
+      "chapter": ["章节（可多个）"],
+      "tags": [""],
+
+      "difficulty": "C",
+      "score": 8
+    },
+    "structure": {
+      "layout": "free_text"
+    },
+    "subject": "学科",
+    "type": "short_answer",
+    "uuid": "UUID",
+    "validation": {
+      "answer": "ANSWER",
+      "explanation": {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image":  "图片数据",
+        "text": "文本"
+      }
+    }
+  },
+  {
+    "content": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "debug_msg": null,
+      "has_image": false,
+      "image":  "图片数据",
+      "text": "文本"
+    },
+    "id": "ID",
+    "meta": {
+      "chapter": ["章节（可多个）"],
+      "tags": [""],
+      "difficulty": "B",
+      "score": 4
+    },
+    "structure": {
+      "blanks": [
+        {
+          "code": null,
+          "code_error": false,
+          "code_run_count": 0,
+          "has_image": false,
+          "id": "ID",
+          "image":  "图片数据",
+          "placeholder": "顺序描述 (英文缩写)",
+          "text": "文本"
+        }
+      ]
+    },
+    "subject": "学科",
+    "type": "fill_blank",
+    "uuid": "UUID",
+    "validation": {
+      "answer": {
+        "b1": [
+          "ANSWER1",
+          "ANSWER2",
+          "ANSWER3",
+          "ANSWER4"
+        ]
+      },
+      "explanation": {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "image":  "图片数据",
+        "text": "文本"
+      }
+    }
+  }
+]

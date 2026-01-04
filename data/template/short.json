@@ -1,0 +1,38 @@
+{
+  "content": {
+    "code": null,
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null,
+    "has_image": false,
+    "image": null,
+    "text": "请简述 HTTP 的中文全称。"
+  },
+  "id": "Q_004",
+  "meta": {
+    "chapter": ["网络协议"],
+    "tags": ["HTTP"],
+    "difficulty": "C",
+    "score": 8
+  },
+  "structure": {
+    "layout": "free_text"
+  },
+  "subject": "计算机网络",
+  "type": "short_answer",
+  "uuid": "UUID_004",
+  "validation": {
+    "answer": [
+      "超文本传输协议",
+      "超文本传送协议"
+    ],
+    "explanation": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null,
+      "text": "HTTP 是 HyperText Transfer Protocol 的缩写，中文为超文本传输协议。"
+    }
+  }
+}

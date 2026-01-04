@@ -1,0 +1,55 @@
+{
+  "content": {
+    "code": null,
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null,
+    "has_image": false,
+    "image": null,
+    "text": "HTML 是一种编程语言。"
+  },
+  "id": "Q_003",
+  "meta": {
+    "chapter": ["Web开发"],
+    "tags": ["HTML"],
+    "difficulty": "B",
+    "score": 2
+  },
+  "structure": {
+    "layout": "horizontal",
+    "options": [
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_TRUE",
+        "image": null,
+        "text": "正确"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_FALSE",
+        "image": null,
+        "text": "错误"
+      }
+    ]
+  },
+  "subject": "计算机科学",
+  "type": "true_false",
+  "uuid": "UUID_003",
+  "validation": {
+    "answer": "OPT_FALSE",
+    "explanation": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null,
+      "text": "HTML 是超文本标记语言（Markup Language），不是编程语言。"
+    }
+  }
+}

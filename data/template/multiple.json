@@ -1,0 +1,77 @@
+{
+  "content": {
+    "code": null,
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null,
+    "has_image": false,
+    "image": null,
+    "text": "以下属于输入设备的有哪些？"
+  },
+  "id": "Q_002",
+  "meta": {
+    "chapter": ["计算机基础"],
+    "tags": ["硬件", "IO设备"],
+    "difficulty": "D",
+    "score": 6
+  },
+  "structure": {
+    "layout": "vertical",
+    "options": [
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_A",
+        "image": null,
+        "text": "鼠标"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_B",
+        "image": null,
+        "text": "显示器"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_C",
+        "image": null,
+        "text": "键盘"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_D",
+        "image": null,
+        "text": "扫描仪"
+      }
+    ]
+  },
+  "subject": "计算机科学",
+  "type": "multiple_choice",
+  "uuid": "UUID_002",
+  "validation": {
+    "answer": [
+      "OPT_A",
+      "OPT_C",
+      "OPT_D"
+    ],
+    "explanation": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null,
+      "text": "鼠标、键盘和扫描仪用于向计算机输入数据；显示器是输出设备。"
+    }
+  }
+}

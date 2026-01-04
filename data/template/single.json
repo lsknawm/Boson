@@ -1,0 +1,73 @@
+{
+  "content": {
+    "code": null,
+    "code_error": false,
+    "code_run_count": 0,
+    "debug_msg": null,
+    "has_image": true,
+    "image": "图片数据",
+    "text": "以下哪个是计算机的“大脑”？"
+  },
+  "id": "Q_001",
+  "meta": {
+    "chapter": ["计算机基础"],
+    "tags": ["硬件"],
+    "difficulty": "C",
+    "score": 5
+  },
+  "structure": {
+    "layout": "vertical",
+    "options": [
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_A",
+        "image": null,
+        "text": "硬盘"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_B",
+        "image": null,
+        "text": "CPU"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_C",
+        "image": null,
+        "text": "内存"
+      },
+      {
+        "code": null,
+        "code_error": false,
+        "code_run_count": 0,
+        "has_image": false,
+        "id": "OPT_D",
+        "image": null,
+        "text": "显卡"
+      }
+    ]
+  },
+  "subject": "计算机科学",
+  "type": "single_choice",
+  "uuid": "UUID_001",
+  "validation": {
+    "answer": "OPT_B",
+    "explanation": {
+      "code": null,
+      "code_error": false,
+      "code_run_count": 0,
+      "has_image": false,
+      "image": null,
+      "text": "CPU（中央处理器）负责处理指令，被视为计算机的大脑。"
+    }
+  }
+}
