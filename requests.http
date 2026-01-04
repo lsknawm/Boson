@@ -1,0 +1,129 @@
+### 全局变量配置
+@host = http://localhost:8080/api/v1
+@contentType = application/json
+
+# ==========================================
+# 1. 基础检查 & 元数据
+# ==========================================
+
+### 1.1 健康检查 (Ping)
+GET http://localhost:8080/ping
+
+### 1.2 获取所有科目
+GET {{host}}/meta/subjects
+
+### 1.3 获取所有标签
+GET {{host}}/meta/tags
+
+# ==========================================
+# 2. 题目管理 (CRUD)
+# ==========================================
+
+### 2.1 创建一道新题目 (单选题)
+# @name createQuestion
+POST {{host}}/questions
+Content-Type: {{contentType}}
+
+{
+  "id": "TEST_Q_001",
+  "type": "single_choice",
+  "subject": "API_TEST_SUBJECT",
+  "meta": {
+    "chapter": ["接口测试"],
+    "tags": ["自动化", "HTTP"],
+    "difficulty": "A",
+    "score": 5
+  },
+  "content": {
+    "text": "这是一个用于 API 测试的临时题目吗？",
+    "has_image": false
+  },
+  "structure": {
+    "options": [
+      { "id": "OPT_A", "text": "是的" },
+      { "id": "OPT_B", "text": "不是" }
+    ]
+  },
+  "validation": {
+    "answer": "OPT_A",
+    "explanation": {
+      "text": "这确实是一个测试题目，稍后会被删除。"
+    }
+  }
+}
+
+> {%
+    // 脚本：保存创建后的 ID 供后续使用
+    // 注意：根据之前的 main.go 实现，返回的可能是 MongoDB 的 ObjectID，也可能是我们传的 ID
+    // 这里我们假设后续操作使用自定义 ID "TEST_Q_001" 进行查找更方便
+    client.global.set("test_id", "TEST_Q_001");
+%}
+
+### 2.2 获取刚刚创建的题目详情
+GET {{host}}/questions/{{test_id}}
+
+### 2.3 更新题目信息 (修改分数和难度)
+PUT {{host}}/questions/{{test_id}}
+Content-Type: {{contentType}}
+
+{
+  "meta": {
+    "chapter": ["接口测试"],
+    "tags": ["自动化", "HTTP", "Updated"],
+    "difficulty": "S",
+    "score": 100
+  },
+  "content": {
+    "text": "这是一个用于 API 测试的临时题目吗？(已更新)"
+  }
+}
+
+### 2.4 筛选题目列表
+# 查找科目为 API_TEST_SUBJECT 且难度为 S 的题目
+GET {{host}}/questions?subject=API_TEST_SUBJECT&difficulty=S
+
+# ==========================================
+# 3. 刷题与考试业务
+# ==========================================
+
+### 3.1 随机生成试卷
+# 请求生成 1 道 "API_TEST_SUBJECT" 科目的题目
+POST {{host}}/quiz/generate
+Content-Type: {{contentType}}
+
+{
+  "subject": "API_TEST_SUBJECT",
+  "count": 1,
+  "difficulty": "S"
+}
+
+### 3.2 提交答案并判分 (回答正确)
+POST {{host}}/quiz/validate
+Content-Type: {{contentType}}
+
+{
+  "question_id": "{{test_id}}",
+  "user_answer": "OPT_A"
+}
+
+### 3.3 提交答案并判分 (回答错误)
+POST {{host}}/quiz/validate
+Content-Type: {{contentType}}
+
+{
+  "question_id": "{{test_id}}",
+  "user_answer": "OPT_B"
+}
+
+### 3.4 单独获取题目解析
+GET {{host}}/quiz/{{test_id}}/explanation
+
+# ==========================================
+# 4. 数据清理
+# ==========================================
+
+### 4.1 删除测试题目
+DELETE {{host}}/questions/{{test_id}}
+
+### 4.2 验证删除结果 (应该返回 404)
+GET {{host}}/questions/{{test_id}}
